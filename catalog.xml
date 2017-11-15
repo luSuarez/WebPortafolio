@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:6627/Servicios.svc?singleWsdl" uri="src/conf/xml-resources/web-service-references/Servicios/wsdl/localhost_6627/Servicios.svc.singlewsdl.wsdl"/>
+</catalog>
