@@ -5,7 +5,12 @@
  */
 package Beans;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonWriter;
 
 /**
  *
@@ -21,6 +26,18 @@ public class Actividad {
         this.Init();
     }
 
+    public Actividad(String actividad){
+        
+        JsonReader reader = Json.createReader(new StringReader(actividad));
+        JsonObject actividadObject = reader.readObject();
+        reader.close();
+        
+        this.IdActividad = actividadObject.getInt("IdActividad");
+        this.NombreActividad = actividadObject.getString("NombreActividad");
+        this.Descripcion = actividadObject.getString("Descripcion");
+        
+    }
+
     private void Init() {
         this.IdActividad = 0;
         this.NombreActividad = "";
@@ -32,6 +49,21 @@ public class Actividad {
         this.IdActividad = actividadObject.getInt("IdActividad");
         this.NombreActividad = actividadObject.getString("NombreActividad");
         this.Descripcion = actividadObject.getString("Descripcion");
+    }
+
+    public String Json() {
+        
+        JsonObject us = Json.createObjectBuilder().
+                add("IdActividad", this.IdActividad).
+                add("NombreActividad", this.NombreActividad).
+                add("Descripcion", this.Descripcion).build();
+
+        StringWriter string = new StringWriter();
+        JsonWriter writer = Json.createWriter(string);
+        writer.writeObject(us);
+        writer.close(); 
+
+        return string.getBuffer().toString();
     }
     
 }

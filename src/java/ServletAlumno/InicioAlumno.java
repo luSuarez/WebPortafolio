@@ -45,14 +45,6 @@ public class InicioAlumno extends HttpServlet {
             
             Alumno alumnos = new Alumno();
             alumnos.IdAlumno = user.IdAlumno;
-            alumnos.Dv = "0";
-            alumnos.ApeMaterno = "0";
-            alumnos.ApePaterno = "0";
-            alumnos.Correo = "0";
-            alumnos.EstadoMora = "0";
-            alumnos.Nombre = "0";
-            alumnos.Reserva = 0;
-            alumnos.Telefono = 0;
             
             String alu = ser.getBasicHttpBindingIServicios().leerAlumno(alumnos.Json());
             

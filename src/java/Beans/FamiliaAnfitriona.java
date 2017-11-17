@@ -34,6 +34,23 @@ public class FamiliaAnfitriona {
      this.Init();
     }
 
+    public FamiliaAnfitriona(JsonObject fam) {
+        
+        this.IdFamilia = fam.getInt("IdFamilia");
+        this.Nombres = fam.getString("Nombres");
+        this.ApePaterno = fam.getString("ApePaterno");
+        this.ApeMaterno = fam.getString("ApeMaterno");
+        this.Identificador = fam.getString("Identificador");
+        this.Correo = fam.getString("Correo");
+        this.Telefono = fam.getInt("Telefono");
+        this.RutaArchivo = fam.getString("RutaArchivo");
+        this.Direccion = fam.getString("Direccion");
+        this.IdCiudad = fam.getInt("IdCiudad");
+        this.IdPais = fam.getInt("IdPais");
+        this.Estado = fam.getString("Estado");
+        
+    }
+
     private void Init() {
         this.IdFamilia = 0;
         this.Nombres = "";

@@ -7,6 +7,7 @@ package ServletAlumno;
 
 import Beans.*;
 import Servicios_Cem.Servicios;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -22,13 +23,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author luis
  */
-@WebServlet(name = "ListarProgramas", urlPatterns = {"/ListarProgramas"})
-public class ListarProgramas extends HttpServlet {
+@WebServlet(name = "ListarActividadesFamilia", urlPatterns = {"/ListarActividadesFamilia"})
+public class ListarActividadesFamilia extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,71 +46,71 @@ public class ListarProgramas extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String id = request.getParameter("IdPrograma");
+            
+            Programa pro = new Programa();
+            pro.IdPrograma = Integer.parseInt(id);
             
             Servicios ser = new Servicios();
-            
-            String listaProgramas = ser.getBasicHttpBindingIServicios().leerTodosProgramas();
-            
-            JsonReader reader = Json.createReader(new StringReader(listaProgramas));
+            String lista =  "leer coleccion de Programa_Actividad"; /*ser.getBasicHttpBindingIServicios().leertodasActividadPrograma();*/ 
+            JsonReader reader = Json.createReader(new StringReader(lista));
             
             JsonArray list = reader.readArray();
-            List<Programa> programas = new ArrayList<>();
+            List<programa_actividad> programasActividad = new ArrayList<>();
             
             for (JsonValue jsonValue : list) {
                 JsonObject prog = (JsonObject)jsonValue;
-                Programa programa = new Programa(prog);
-//                if (programa.Estado == 2) {
-                    programas.add(programa);
-//                }
+                programa_actividad pa = new programa_actividad(prog);
+                if (pa.IdPrograma == pro.IdPrograma) {
+                    programasActividad.add(pa);
+                }
             }
             
-            String listaInstitucion = ser.getBasicHttpBindingIServicios().leerTodasInstituciones();
+            List<Actividad> actividades = new ArrayList<>();
             
-            JsonReader readerInstitucion = Json.createReader(new StringReader(listaInstitucion));
-            
-            JsonArray listInstitucion = readerInstitucion.readArray();
-            List<Institucion> instituciones = new ArrayList<>();
-            
-            for (JsonValue jsonValue : listInstitucion) {
-                JsonObject inst = (JsonObject)jsonValue;
-                Institucion institucion = new Institucion(inst);
-                instituciones.add(institucion);
+            for (programa_actividad object : programasActividad) {
+                Actividad ac = new Actividad();
+                ac.IdActividad = object.IdActividad;
+                String a = ser.getBasicHttpBindingIServicios().leerActividad(ac.Json());
+                Actividad act = new Actividad(a);
+                actividades.add(act);
             }
             
-            String p = ser.getBasicHttpBindingIServicios().leerTodosPaises();
+            String progjson = ser.getBasicHttpBindingIServicios().leerPrograma(pro.Json());
+            Programa prog = new Programa(progjson);
             
-            JsonReader reader1 = Json.createReader(new StringReader(p));
-            JsonArray listpais = reader1.readArray();
-            List<Pais> paises = new ArrayList<>();
             
-            for (JsonValue jsonValue : listpais) {
-                JsonObject pa = (JsonObject)jsonValue;
-                Pais pais = new Pais(pa);
-                paises.add(pais);
+            Institucion insti = new Institucion();
+            insti.IdInstitucion = prog.IdInstitucion;
+            
+            String IstitucionJson = ser.getBasicHttpBindingIServicios().leerInstitucion(insti.Json());
+            Institucion institucio  = new Institucion(IstitucionJson);
+            
+            /*leer familias*/
+            String listaFamilia = ser.getBasicHttpBindingIServicios().leerTodasFamiliasAnfitrionas();
+            JsonReader readerFamilia = Json.createReader(new StringReader(listaFamilia));
+            
+            JsonArray listFamilia = readerFamilia.readArray();
+            List<FamiliaAnfitriona> familias = new ArrayList<>();
+            
+            for (JsonValue jsonValue : listFamilia) {
+                JsonObject fam = (JsonObject)jsonValue;
+                FamiliaAnfitriona famili = new FamiliaAnfitriona(fam);
+                if (institucio.IdCiudad == famili.IdCiudad) {
+                    familias.add(famili);
+                }
             }
             
-            String c = ser.getBasicHttpBindingIServicios().leerTodasCiudades();
-            
-            JsonReader reader2 = Json.createReader(new StringReader(c));
-            JsonArray listciudad = reader2.readArray();
-            List<Ciudad> ciudades = new ArrayList<>();
-            
-            for (JsonValue jsonValue : listciudad) {
-                JsonObject ci = (JsonObject)jsonValue;
-                Ciudad ciudad = new Ciudad(ci);
-                ciudades.add(ciudad);
-            }
-            
-            if (paises.isEmpty() || ciudades.isEmpty() || programas.isEmpty() || instituciones.isEmpty()) {
-                response.sendRedirect("InicioAlumno");
+            if (familias.isEmpty() || actividades.isEmpty()) {
+                response.sendRedirect("ListarProgramas");
             }else{
-                request.setAttribute("listaPaises", paises);
-                request.setAttribute("listaCiudades", ciudades);
-                request.setAttribute("listaProgramas", programas);
-                request.setAttribute("listaInstituciones", instituciones);
-                request.getRequestDispatcher("postulacion.jsp").forward(request, response);
+                request.setAttribute("actividades", actividades);
+                request.setAttribute("familias", familias);
+                HttpSession sesion = request.getSession();
+                sesion.setAttribute("idPrograma", pro.IdPrograma);
+                request.getRequestDispatcher("ListaFamilia.jsp").forward(request, response);
             }
-            
+                    
         }
     }
 

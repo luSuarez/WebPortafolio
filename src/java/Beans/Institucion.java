@@ -6,9 +6,11 @@
 package Beans;
 
 import java.io.StringReader;
+import java.io.StringWriter;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonWriter;
 
 /**
  *
@@ -64,4 +66,24 @@ public class Institucion {
         this.IdCiudad = institucionObject.getInt("IdCiudad");
         this.IdPais = institucionObject.getInt("IdPais");
     }    
+
+    public String Json() {
+        JsonObject us = Json.createObjectBuilder().
+                add("IdInstitucion", this.IdInstitucion).
+                add("Nombres", this.Nombres).
+                add("Correo", this.Correo).
+                add("Telefono", this.Telefono).
+                add("Correo", this.Correo).
+                add("PaginaWeb", this.PaginaWeb).
+                add("Direcion", this.Direcion).
+                add("IdCiudad", this.IdCiudad).
+                add("IdPais", this.IdPais).build();
+
+        StringWriter string = new StringWriter();
+        JsonWriter writer = Json.createWriter(string);
+        writer.writeObject(us);
+        writer.close(); 
+
+        return string.getBuffer().toString();
+    }
 }

@@ -87,7 +87,7 @@
 
                                                                                         <%}%>
                                                                                     <%}%>
-                                                                                <td><%= pro.IdPrograma %></td>
+                                                                                    <td><a href="ListarActividadesFamilia?IdPrograma=<%=pro.IdPrograma%>">Mas</a></td>
                                                                             </tr>
                                                                         <%}%>
                                                                     </tbody>
@@ -113,8 +113,8 @@
 										<h2>Menu</h2>
 									</header>
 									<ul>
-										<li><a href="svtInicioAlumno">Ver estado</a></li>
-										<li><a href="postulacion.jsp">Realizar Postulacion</a></li>
+										<li><a href="InicioAlumno">Ver estado</a></li>
+										<li><a href="ListarProgramas">Realizar Postulacion</a></li>
 										<li><a href="SignOut">Salir</a></li>
 									</ul>
 								</nav>

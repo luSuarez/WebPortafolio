@@ -65,23 +65,23 @@ public class Alumno {
     }
     
     public String Json(){
-            JsonObject us = Json.createObjectBuilder().
-                    add("IdAlumno", this.IdAlumno).
-                    add("Dv", this.Dv).
-                    add("ApeMaterno", this.ApeMaterno).
-                    add("ApePaterno", this.ApePaterno).
-                    add("Correo", this.Correo).
-                    add("EstadoMora", this.EstadoMora).
-                    add("Nombre", this.Nombre).
-                    add("Reserva", this.Reserva).
-                    add("Telefono", this.Telefono).build();
-            
-            StringWriter string = new StringWriter();
-            JsonWriter writer = Json.createWriter(string);
-            writer.writeObject(us);
-            writer.close(); 
-            
-            return string.getBuffer().toString();
+        JsonObject us = Json.createObjectBuilder().
+                add("IdAlumno", this.IdAlumno).
+                add("Dv", this.Dv).
+                add("ApeMaterno", this.ApeMaterno).
+                add("ApePaterno", this.ApePaterno).
+                add("Correo", this.Correo).
+                add("EstadoMora", this.EstadoMora).
+                add("Nombre", this.Nombre).
+                add("Reserva", this.Reserva).
+                add("Telefono", this.Telefono).build();
+
+        StringWriter string = new StringWriter();
+        JsonWriter writer = Json.createWriter(string);
+        writer.writeObject(us);
+        writer.close(); 
+
+        return string.getBuffer().toString();
     }
     
     public String Rut(String rut){
