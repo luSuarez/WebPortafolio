@@ -46,7 +46,7 @@ public class Intercambio {
         
         this.IdIntercambio = intercambioObject.getInt("IdIntercambio");
         this.Estado = intercambioObject.getString("Estado");
-        this.IdAdministrativo = intercambioObject.getInt("SiIdAdministrativogla");
+        this.IdAdministrativo = intercambioObject.getInt("IdAdministrativo");
         this.IdFamilia = intercambioObject.getInt("IdFamilia");
         this.IdAlumno = intercambioObject.getInt("IdAlumno");
         this.IdPrograma = intercambioObject.getInt("IdPrograma");

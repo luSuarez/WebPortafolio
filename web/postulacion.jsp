@@ -115,6 +115,7 @@
 									<ul>
 										<li><a href="InicioAlumno">Ver estado</a></li>
 										<li><a href="ListarProgramas">Realizar Postulacion</a></li>
+										<li><a href="ListarNotas">Notas</a></li>
 										<li><a href="SignOut">Salir</a></li>
 									</ul>
 								</nav>
