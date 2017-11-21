@@ -7,7 +7,6 @@ package ServletAlumno;
 
 import Beans.*;
 import Servicios_Cem.Servicios;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -52,29 +51,6 @@ public class ListarActividadesFamilia extends HttpServlet {
             pro.IdPrograma = Integer.parseInt(id);
             
             Servicios ser = new Servicios();
-            String lista =  "leer coleccion de Programa_Actividad"; /*ser.getBasicHttpBindingIServicios().leertodasActividadPrograma();*/ 
-            JsonReader reader = Json.createReader(new StringReader(lista));
-            
-            JsonArray list = reader.readArray();
-            List<programa_actividad> programasActividad = new ArrayList<>();
-            
-            for (JsonValue jsonValue : list) {
-                JsonObject prog = (JsonObject)jsonValue;
-                programa_actividad pa = new programa_actividad(prog);
-                if (pa.IdPrograma == pro.IdPrograma) {
-                    programasActividad.add(pa);
-                }
-            }
-            
-            List<Actividad> actividades = new ArrayList<>();
-            
-            for (programa_actividad object : programasActividad) {
-                Actividad ac = new Actividad();
-                ac.IdActividad = object.IdActividad;
-                String a = ser.getBasicHttpBindingIServicios().leerActividad(ac.Json());
-                Actividad act = new Actividad(a);
-                actividades.add(act);
-            }
             
             String progjson = ser.getBasicHttpBindingIServicios().leerPrograma(pro.Json());
             Programa prog = new Programa(progjson);
@@ -101,16 +77,16 @@ public class ListarActividadesFamilia extends HttpServlet {
                 }
             }
             
-            if (familias.isEmpty() || actividades.isEmpty()) {
+            if (familias.isEmpty()/* || actividades.isEmpty()*/) {
                 response.sendRedirect("ListarProgramas");
             }else{
-                request.setAttribute("actividades", actividades);
+//                request.setAttribute("actividades", actividades);
                 request.setAttribute("familias", familias);
                 HttpSession sesion = request.getSession();
                 sesion.setAttribute("idPrograma", pro.IdPrograma);
                 request.getRequestDispatcher("ListaFamilia.jsp").forward(request, response);
             }
-                    
+            
         }
     }
 

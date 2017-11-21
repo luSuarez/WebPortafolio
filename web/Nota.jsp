@@ -6,9 +6,8 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-
-<% List<FamiliaAnfitriona> familias = (List<FamiliaAnfitriona>)request.getAttribute("familias"); %>
-<% int id = (int)request.getSession().getAttribute("idPrograma"); %>
+<% Usuario user = (Usuario)request.getSession().getAttribute("usuario"); %>
+<% List<NotasAlumno> lista = (List<NotasAlumno>)request.getAttribute("lista"); %>
 <html>
 	<head>
 		<title>Centro de Estudios Montreal</title>
@@ -40,42 +39,43 @@
 								<section id="banner">
 									<div class="content">
 										<header>
-											<h1>Realizar postulaciones</h1>
+											<h1>Informacion del Alumno</h1>
 										</header>
 									</div>
 								</section>
-					<!-- Section -->
-							<h4>Actividades del curso</h4>
-							 <div class="table-wrapper">
-								
-						</div>
-							
+
 							<!-- Section -->
-							<h4>Familias disponibles</h4>
+							<h4>Notas</h4>
 							 <div class="table-wrapper">
 								<table class="alt">
-									<thead>
-										<tr>
-											<th>Nombre</th>
-											<th>Correo</th>
-											<th>Telefono</th>
-											<th>Direccion</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-                                                                            <%for (FamiliaAnfitriona familia : familias) {%>
-                                                                                <tr>
-                                                                                    <td><%=familia.NombreCompleto() %></td>
-                                                                                    <td><%=familia.Correo %></td>
-                                                                                    <td><%=familia.Telefono %></td>
-                                                                                    <td><%=familia.Direccion %></td>
-                                                                                    <td><a href="RealizarPostulacion?idFamilia=<%=familia.IdFamilia %>">Selecciona</a></td>
-                                                                                </tr>    
-                                                                            <%}%>
-									</tbody>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nombre del programa</th>
+                                                                            <th>Nota 1</th>
+                                                                            <th>Nota 2</th>
+                                                                            <th>Nota 3</th>
+                                                                            <th>Promedio</th>
+                                                                            <th>Certificado</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <% for (NotasAlumno elem : lista) { %>
+                                                                        <tr>
+                                                                            <td><%=elem.NombrePrograma %></td>
+                                                                                <% for (Nota not : elem.Notas) {%>
+                                                                                <td><%=not.Evaluacion %></td>
+                                                                                <%}%>
+                                                                            <td><%=elem.Promedio %></td>
+                                                                            <td><a href="">Certificado</a></td>
+                                                                        </tr>
+                                                                        <% } %>
+                                                                    </tbody>
 								</table>
-							</div>	
+							</div>
+
+							<!-- Section -->
+								
+
 						</div>
 					</div>
 
@@ -92,7 +92,7 @@
 										<h2>Menu</h2>
 									</header>
 									<ul>
-										<li><a href="svtInicioAlumno">Ver estado</a></li>
+										<li><a href="InicioAlumno">Ver estado</a></li>
 										<li><a href="ListarProgramas">Realizar Postulacion</a></li>
 										<li><a href="ListarNotas">Notas</a></li>
 										<li><a href="SignOut">Salir</a></li>

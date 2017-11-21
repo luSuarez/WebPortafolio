@@ -107,7 +107,7 @@ public class ListarNotas extends HttpServlet {
                     }
                 }
                 
-                 ltsNotas.Promedio = ltsNotas.round(ltsNotas.CalcularPromedio(), 2);
+                 ltsNotas.Promedio = ltsNotas.round(ltsNotas.CalcularPromedio(), 1);
                 
                 listProgramas.add(ltsNotas);
                 
@@ -117,7 +117,7 @@ public class ListarNotas extends HttpServlet {
                 response.sendRedirect("InicioAlumno");
             }else{
                 request.setAttribute("lista", listProgramas);
-                request.getRequestDispatcher("listaNotas.jsp").forward(request, response);
+                request.getRequestDispatcher("Nota.jsp").forward(request, response);
             }
             
         }

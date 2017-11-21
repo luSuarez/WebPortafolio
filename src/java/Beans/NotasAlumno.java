@@ -5,7 +5,6 @@
  */
 package Beans;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import java.util.List;
  * @author luis
  */
 public class NotasAlumno {
+    public int IdIntercambio;
     public String NombrePrograma;
     public List<Nota> Notas;
     public double Promedio;
@@ -23,13 +23,14 @@ public class NotasAlumno {
     }
 
     private void Init() {
+        IdIntercambio = 0;
         NombrePrograma = " ";
         Notas = new ArrayList<>();
         Promedio = 0;
     }
     
     public double CalcularPromedio(){
-        int suma = 0;
+        double suma = 0;
         if (Notas==null) {
             return 0;
         }else if(Notas.isEmpty()) {
