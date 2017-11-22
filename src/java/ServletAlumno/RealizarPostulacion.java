@@ -40,10 +40,9 @@ public class RealizarPostulacion extends HttpServlet {
             
             HttpSession sesion = request.getSession();
             
-            String idPrograma = (String)sesion.getAttribute("idPrograma");
+            int idPrograma = (int)sesion.getAttribute("idPrograma");
             String idFamilia = request.getParameter("idFamilia");
             int idFam = Integer.parseInt(idFamilia);
-            int idPro = Integer.parseInt(idPrograma);
             
             Usuario user = (Usuario)sesion.getAttribute("usuario");
             
@@ -51,7 +50,7 @@ public class RealizarPostulacion extends HttpServlet {
             
             Intercambio inter = new Intercambio();
             inter.IdAlumno = user.IdAlumno;
-            inter.IdPrograma = idPro;
+            inter.IdPrograma = idPrograma;
             inter.IdFamilia = idFam; 
             inter.Estado = "Pendiente";
             
@@ -60,7 +59,7 @@ public class RealizarPostulacion extends HttpServlet {
             if (postula) {
                 Mensaje = "La postulicion ha sido registrada";
             }else{
-                Mensaje = "La postulicion no se ha podido registrar, vuelva a ";
+                Mensaje = "La postulicion no se ha podido registrar, vuelva a interntarlo más tarde";
             }
             request.setAttribute("mensaje", Mensaje);
             request.getRequestDispatcher("InicioAlumno").forward(request, response);

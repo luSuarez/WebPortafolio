@@ -59,7 +59,7 @@ public class ListarActividadesFamilia extends HttpServlet {
             Institucion insti = new Institucion();
             insti.IdInstitucion = prog.IdInstitucion;
             
-            String IstitucionJson = ser.getBasicHttpBindingIServicios().leerInstitucion(insti.Json());
+            String IstitucionJson = ser.getBasicHttpBindingIServicios().leerInstitucionXML(insti.Json());
             Institucion institucio  = new Institucion(IstitucionJson);
             
             /*leer familias*/

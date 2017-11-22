@@ -57,7 +57,11 @@ public class Programa {
         } catch (Exception e) {
             this.Cupos = 0;
         }
-        this.IdInstitucion = programaObject.getInt("IdInstitucion");
+        try {
+            this.IdInstitucion = programaObject.getInt("IdInstitucion");
+        } catch (Exception e) {
+            this.IdInstitucion = 0;
+        }
         this.FechaInicio = programaObject.getString("FechaInicio".toString());
         this.FechaTermino = programaObject.getString("FechaTermino".toString());
         this.TipoCurso = programaObject.getInt("TipoCurso");
@@ -79,7 +83,11 @@ public class Programa {
         } catch (Exception e) {
             this.Cupos = 0;
         }
-        this.IdInstitucion = programaObject.getInt("IdInstitucion");
+        try {
+            this.IdInstitucion = programaObject.getInt("IdInstitucion");
+        } catch (Exception e) {
+            this.IdInstitucion = 0;
+        }
         this.FechaInicio = programaObject.getString("FechaInicio".toString());
         this.FechaTermino = programaObject.getString("FechaTermino".toString());
         try {

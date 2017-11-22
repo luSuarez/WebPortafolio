@@ -65,7 +65,7 @@ public class CrearFamilia extends HttpServlet {
             boolean b = ser.getBasicHttpBindingIServicios().crearFamiliaAnfitriona(fa.Json());
             if (b) {
                 /*ya que la familia se pudo insertar, hay que insertar el usuario*/
-                String f = ser.getBasicHttpBindingIServicios().leerFamiliaAnfitrionaIdentificacion(fa.Json());
+                String f = ser.getBasicHttpBindingIServicios().leerFamiliaIdentificador(fa.Json());
                 
                 FamiliaAnfitriona familia = new FamiliaAnfitriona(f);
                 Usuario user = new Usuario();

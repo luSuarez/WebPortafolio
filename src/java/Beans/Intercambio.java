@@ -36,7 +36,11 @@ public class Intercambio {
         
         this.IdIntercambio = intercambioObject.getInt("IdIntercambio");
         this.Estado = intercambioObject.getString("Estado");
-        this.IdAdministrativo = intercambioObject.getInt("SiIdAdministrativogla");
+        try {
+        this.IdAdministrativo = intercambioObject.getInt("IdAdministrativo");
+        } catch (Exception e) {
+            this.IdAdministrativo = 0;
+        }
         this.IdFamilia = intercambioObject.getInt("IdFamilia");
         this.IdAlumno = intercambioObject.getInt("IdAlumno");
         this.IdPrograma = intercambioObject.getInt("IdPrograma");
@@ -46,7 +50,11 @@ public class Intercambio {
         
         this.IdIntercambio = intercambioObject.getInt("IdIntercambio");
         this.Estado = intercambioObject.getString("Estado");
+        try {
         this.IdAdministrativo = intercambioObject.getInt("IdAdministrativo");
+        } catch (Exception e) {
+            this.IdAdministrativo = 0;
+        }
         this.IdFamilia = intercambioObject.getInt("IdFamilia");
         this.IdAlumno = intercambioObject.getInt("IdAlumno");
         this.IdPrograma = intercambioObject.getInt("IdPrograma");

@@ -39,7 +39,12 @@ public class Alumno {
         reader.close();
         
         this.IdAlumno = alumnoObject.getInt("IdAlumno");
-        this.Dv = alumnoObject.getString("Dv");
+        try {
+            this.Dv = alumnoObject.getString("Dv");
+        } catch (Exception e) {
+            this.Dv = "0";
+        }
+        
         this.Nombre = alumnoObject.getString("Nombre");
         this.ApePaterno = alumnoObject.getString("ApePaterno");
         this.ApeMaterno = alumnoObject.getString("ApeMaterno");
