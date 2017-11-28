@@ -10,7 +10,6 @@ import Servicios_Cem.Servicios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
@@ -45,72 +44,68 @@ public class ListarNotas extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            
+            /*Rescatar el usuario alumno de la sesion.*/
             
             HttpSession sesion = request.getSession();
             Usuario user = (Usuario)sesion.getAttribute("usuario");
             
+            /*Crear instancia de los servicios*/
+            
             Servicios ser = new Servicios();
             
+            /*Rescatar coleccion de intercambios de la bd y pasarla a List<Intercambio>*/
+            
             String listaIntercambio = ser.getBasicHttpBindingIServicios().leerTodosIntercambios();
-            
             JsonReader readerIntercambio = Json.createReader(new StringReader(listaIntercambio));
-            
             JsonArray listIntercambio = readerIntercambio.readArray();
             List<Intercambio> intercambios = new ArrayList<>();
-            
             for (JsonValue object : listIntercambio) {
                 JsonObject inter = (JsonObject)object;
-                
                 if (user.IdAlumno == inter.getInt("IdAlumno")) {
-                    Intercambio interc = new Intercambio(inter);
-                    intercambios.add(interc);
+                    if (inter.getJsonString("Estado").equals("Aprobado")) {
+                        Intercambio interc = new Intercambio(inter);
+                        intercambios.add(interc);
+                    }
                 }
-                
             }
             
-            List<Programa> programas = new ArrayList<>();
+            /*Obtener programas que estan en la lista intercambio*/
             
+            List<Programa> programas = new ArrayList<>();
             for (Intercambio intercambio : intercambios) {
                 Programa pro = new Programa();
                 pro.IdPrograma = intercambio.IdPrograma;
-                
                 String jsonPrograma = ser.getBasicHttpBindingIServicios().leerPrograma(pro.Json());
-                
                 Programa programa = new Programa(jsonPrograma);
-                
                 programas.add(programa);
             }
             
+            /*Obtener coleccion de notas*/
+            
             String listaNotas = ser.getBasicHttpBindingIServicios().leerTodasNotas();
-            
             JsonReader readerNotas = Json.createReader(new StringReader(listaNotas));
-            
             JsonArray listNotas = readerNotas.readArray();
             List<Nota> notas = new ArrayList<>();
-            
             for (JsonValue nota1 : listNotas) {
                 JsonObject not = (JsonObject)nota1;
                 Nota n = new Nota(not);
                 notas.add(n);
             }
             
-            List<NotasAlumno> listProgramas = new ArrayList<>();
+            /*Generar lista de Notas por Programa*/
             
+            List<NotasAlumno> listProgramas = new ArrayList<>();
             for (Programa programa : programas) {
                 NotasAlumno ltsNotas = new NotasAlumno();
                 ltsNotas.NombrePrograma = programa.NombrePrograma;
-                
                 for (Nota nota : notas) {
                     if (nota.IdPrograma == programa.IdPrograma && user.IdAlumno == nota.IdAlumno) {
                         ltsNotas.Notas.add(nota);
                     }
                 }
-                
-                 ltsNotas.Promedio = ltsNotas.round(ltsNotas.CalcularPromedio(), 1);
-                
+                ltsNotas.Promedio = ltsNotas.round(ltsNotas.CalcularPromedio(), 1);
                 listProgramas.add(ltsNotas);
-                
             }
             
             if (listProgramas.isEmpty()) {

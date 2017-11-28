@@ -75,8 +75,8 @@
 									  <p class="message">Estas registrado? <a href="#">Inicia Sesion</a></p>
 									</form>
 									<form action="LogInFamilia" method="POST" class="login-form">
-                                                                            <input type="text" name="user" placeholder="Nombre de usuario" value="nic.velasquez"/>
-                                                                            <input type="password" name="pass" placeholder="Contraseña" value="12345"/>
+                                                                            <input type="text" name="user" placeholder="Nombre de usuario" value="edgarR"/>
+                                                                            <input type="password" name="pass" placeholder="Contraseña" value="123456"/>
 									  <input type="submit" value="Iniciar Sesion" />
 									  <p class="message">No estas regristrado? <a href="#">Crea una cuenta</a></p>
 									</form>

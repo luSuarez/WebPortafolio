@@ -1,14 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="Beans.*"%>
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 
-<% List<FamiliaAnfitriona> familias = (List<FamiliaAnfitriona>)request.getAttribute("familias"); %>
-<% int id = (int)request.getSession().getAttribute("idPrograma"); %>
+<% List<FamiliaAnfitriona> familias = (List<FamiliaAnfitriona>)request.getSession().getAttribute("familias"); %>
 <html>
 	<head>
 		<title>Centro de Estudios Montreal</title>
@@ -44,11 +37,6 @@
 										</header>
 									</div>
 								</section>
-					<!-- Section -->
-							<h4>Actividades del curso</h4>
-							 <div class="table-wrapper">
-								
-						</div>
 							
 							<!-- Section -->
 							<h4>Familias disponibles</h4>

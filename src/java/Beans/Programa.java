@@ -26,7 +26,7 @@ public class Programa {
     public String FechaTermino;
     private int TipoCurso;
 //    public int Estado;
-    public int IdActividad;
+//    public int IdActividad;
     public String Descripcion;
 
     public Programa() {
@@ -41,7 +41,7 @@ public class Programa {
         this.FechaInicio = "0";
         this.FechaTermino = "0";
         this.TipoCurso = 0;
-        this.IdActividad = 0;
+//        this.IdActividad = 0;
         this.Descripcion = "0";
     } 
     
@@ -65,7 +65,7 @@ public class Programa {
         this.FechaInicio = programaObject.getString("FechaInicio".toString());
         this.FechaTermino = programaObject.getString("FechaTermino".toString());
         this.TipoCurso = programaObject.getInt("TipoCurso");
-        this.IdActividad = programaObject.getInt("IdActividad");
+//        this.IdActividad = programaObject.getInt("IdActividad");
         try {
             this.Descripcion = programaObject.getString("Descripcion");
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class Programa {
         } catch (Exception e) {
             this.TipoCurso = 0;
         }
-        this.IdActividad = programaObject.getInt("IdActividad");
+//        this.IdActividad = programaObject.getInt("IdActividad");
         try {
             this.Descripcion = programaObject.getString("Descripcion");
         } catch (Exception e) {
@@ -114,7 +114,7 @@ public class Programa {
                     addNull("FechaInicio").
                     addNull("FechaTermino").
                     add("TipoCurso", this.TipoCurso).
-                    add("IdActividad", this.IdActividad).
+//                    add("IdActividad", this.IdActividad).
                     add("Descripcion", this.Descripcion).
 //                    add("Estado", this.Estado).
                     build();

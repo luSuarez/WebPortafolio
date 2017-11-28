@@ -66,7 +66,7 @@
                                                                                 <td><%=not.Evaluacion %></td>
                                                                                 <%}%>
                                                                             <td><%=elem.Promedio %></td>
-                                                                            <td><a href="">Certificado</a></td>
+                                                                            <td><a href="GenrarCertificado?elemento=<%=elem %>">Certificado</a></td>
                                                                         </tr>
                                                                         <% } %>
                                                                     </tbody>

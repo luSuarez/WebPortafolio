@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ServletFamilia;
+package ServletAlumno;
 
 import Beans.*;
 import Servicios_Cem.Servicios;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author luis
  */
-@WebServlet(name = "LogInFamilia", urlPatterns = {"/LogInFamilia"})
-public class LogInFamilia extends HttpServlet {
+@WebServlet(name = "GenrarCertificado", urlPatterns = {"/GenrarCertificado"})
+public class GenrarCertificado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,60 +37,46 @@ public class LogInFamilia extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
             HttpSession sesion = request.getSession();
-            
-            /*rescatar parametros de JSP*/
-            String user = request.getParameter("user");
-            String pass = request.getParameter("pass");
-            
-            /*Iniciar Servicios*/
+            Usuario usuario = (Usuario)sesion.getAttribute("sesion");
+            NotasAlumno elemento = (NotasAlumno)request.getAttribute("elemento");
             Servicios ser = new Servicios();
-            /*Instancia de usuario*/
-            Usuario usuario = new Usuario();
-            /*Almacenar datos de usuarios*/
-            usuario.NomUsuario = user;
-            usuario.Password = pass;
             
-            /*Serializar usuarios en JSON*/
-            String string = usuario.JsonFamilia();
-            /*Metodo para validar si el usuario existe*/
-            boolean b = ser.getBasicHttpBindingIServicios().validarUsuario(string);
+            Intercambio inter = new Intercambio();
+            inter.IdIntercambio = elemento.IdIntercambio;
             
-            if (b) {
-                /*Metodo para leer usuario*/
-                String usua = ser.getBasicHttpBindingIServicios().leerUsuario(usuario.JsonFamilia());
-
-                Usuario usuario2 = new Usuario(usua);
-                FamiliaAnfitriona fa = new FamiliaAnfitriona();
-                fa.IdFamilia = usuario2.IdFamilia;
-                
-                String fam = ser.getBasicHttpBindingIServicios().leerFamiliaAnfitriona(fa.Json());
-                
-                FamiliaAnfitriona familia = new FamiliaAnfitriona(fam);
-                
-                Ciudad c = new Ciudad();
-                c.IdCiudad = familia.IdCiudad;
-                
-                String ci = ser.getBasicHttpBindingIServicios().leerCiudad(c.Json());
-                Ciudad ciudad = new Ciudad(ci);
-                
-                Pais p  = new Pais();
-                p.IdPais = familia.IdPais;
-                
-                String pa = ser.getBasicHttpBindingIServicios().leerPais(p.Json());
-                
-                Pais pais = new Pais(pa);
-                
-                request.setAttribute("pais", pais);
-                request.setAttribute("ciudad", ciudad);
-                
-                request.setAttribute("familia", familia);
-                sesion.setAttribute("usuario", usuario2);
-                
-                request.getRequestDispatcher("familia.jsp").forward(request, response);
-            }else{
-                response.sendRedirect("CargarLogInFamilia");
-            }
+            Intercambio intercambio = new Intercambio(ser.getBasicHttpBindingIServicios().leerIntercambio(inter.Json()));
+            
+            Programa program = new Programa();
+            program.IdPrograma = intercambio.IdPrograma;
+            
+            Programa programa = new Programa(ser.getBasicHttpBindingIServicios().leerPrograma(program.Json()));
+            
+            Institucion insti = new Institucion();
+            insti.IdInstitucion = programa.IdInstitucion;
+            
+            Institucion institucion = new Institucion(ser.getBasicHttpBindingIServicios().leerInstitucionXML(insti.Json()));
+            
+            Pais pa = new Pais();
+            pa.IdPais = institucion.IdPais;
+            
+            Pais pais = new Pais(ser.getBasicHttpBindingIServicios().leerPais(pa.Json()));
+            
+            Ciudad ci = new Ciudad();
+            ci.IdCiudad = institucion.IdCiudad;
+            
+            Ciudad ciudad = new Ciudad(ser.getBasicHttpBindingIServicios().leerCiudad(ci.Json()));
+            
+            Alumno alu = new Alumno();
+            alu.IdAlumno = usuario.IdAlumno;
+            
+            Alumno alumno = new Alumno(ser.getBasicHttpBindingIServicios().leerAlumno(alu.Json()));
+            
+            pdf pdf = new pdf();
+            pdf.GenerarPDF(alumno.NombreCompleto(), alumno.RUTAting(), programa.NombrePrograma, institucion.Nombres, pais.NombrePais, ciudad.NombreCiudad, elemento.Promedio);
+            
+            
         }
     }
 

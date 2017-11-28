@@ -81,10 +81,11 @@ public class ListarActividadesFamilia extends HttpServlet {
                 response.sendRedirect("ListarProgramas");
             }else{
 //                request.setAttribute("actividades", actividades);
-                request.setAttribute("familias", familias);
+//                request.setAttribute("familias", familias);
                 HttpSession sesion = request.getSession();
                 sesion.setAttribute("idPrograma", pro.IdPrograma);
-                request.getRequestDispatcher("ListaFamilia.jsp").forward(request, response);
+                sesion.setAttribute("familias", familias);
+                response.sendRedirect("ListaFamilia.jsp");
             }
             
         }

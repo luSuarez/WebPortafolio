@@ -91,7 +91,7 @@ public class Intercambio {
                     add("IdIntercambio", this.IdIntercambio).
                     add("Estado", this.Estado).
                     addNull("IdAdministrativo").
-                    addNull("IdFamilia").
+                    add("IdFamilia", this.IdFamilia).
                     add("IdAlumno", this.IdAlumno).
                     add("IdPrograma", this.IdPrograma).build();
             

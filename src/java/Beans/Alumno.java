@@ -96,4 +96,12 @@ public class Alumno {
     public String Dv(String rut){
         return rut.substring(rut.length()-1);
     }
+    
+    public String NombreCompleto(){
+        return Nombre +" "+ ApePaterno +" "+ ApeMaterno;
+    }
+    
+    public String RUTAting(){
+        return IdAlumno+"-"+Dv;
+    }
 }
